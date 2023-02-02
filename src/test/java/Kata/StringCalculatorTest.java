@@ -23,4 +23,9 @@ class StringCalculatorTest {
         assertEquals(3,stringCalculator.add("1,2"));
 
     }
+    @Test
+    void TestingTheSumOfMultipleAmountOfNumbers() {
+        assertEquals(15,stringCalculator.add("1,2,3,4,5"));
+
+    }
 }
