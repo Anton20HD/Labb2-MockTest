@@ -49,5 +49,10 @@ class StringCalculatorTest {
 
 
     }
+    @Test
+    void TestingNumberBiggerThan1000() {
+        assertEquals(2, stringCalculator.add("2,1001"));
+
+    }
 }
 
