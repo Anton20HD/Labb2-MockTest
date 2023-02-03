@@ -1,12 +1,16 @@
 package Kata;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class StringCalculatorTest {
 
         StringCalculator stringCalculator = new StringCalculator();
+
+
 
     @Test
     void EmptyStringReturnZero() {    // Test fails
@@ -33,4 +37,17 @@ class StringCalculatorTest {
         assertEquals(3,stringCalculator.add("//;\n1;2"));
 
     }
+    @Test
+    void TestingNegativeNumbersMethodException() {
+        try {
+            stringCalculator.add("-3");
+        }   catch (IllegalArgumentException e) {
+            assertEquals("Negatives not allowed: [-3]", e.getMessage());
+        }
+
+
+
+
+    }
 }
+
