@@ -13,7 +13,7 @@ class StringCalculatorTest {
 
 
     @Test
-    void EmptyStringReturnZero() {    // Test fails
+    void TestingEmptyStringReturnZero() {    // Test fails
         assertEquals(0, stringCalculator.add(""));
 
     }
