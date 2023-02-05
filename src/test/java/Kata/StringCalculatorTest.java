@@ -1,6 +1,5 @@
 package Kata;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class StringCalculatorTest {
 
         StringCalculator stringCalculator = new StringCalculator();
+
 
 
 
@@ -45,13 +45,21 @@ class StringCalculatorTest {
             assertEquals("Negatives not allowed: [-3]", e.getMessage());
         }
 
-
-
-
     }
     @Test
     void TestingNumberBiggerThan1000() {
         assertEquals(2, stringCalculator.add("2,1001"));
+
+    }
+    @Test
+    void TestingCustomDelimiter() {
+        assertEquals(6,stringCalculator.add("//[***]\n1***2***3"));
+
+    }
+    @Test
+    void TestingMultipleDelimiters() {
+        assertEquals(6,stringCalculator.add("//[*][%]\n1*2%3"));
+
 
     }
 }
