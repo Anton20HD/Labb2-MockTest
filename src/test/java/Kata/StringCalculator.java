@@ -1,5 +1,6 @@
 package Kata;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -13,41 +14,34 @@ public class StringCalculator {
 
             return 0;
         }
-            String[] delimiter = addDelimiter(numbers);
-            numbers = removeDelimiter(numbers);
-           String[] numberArr = splitNumber(numbers,delimiter);
-            handleNegativeNumbersException(numberArr);
+        String delimiter = addDelimiter(numbers);
+        numbers = removeDelimiter(numbers);
+        String[] numberArr = splitNumber(numbers, delimiter);
+        handleNegativeNumbersException(numberArr);
 
 
-            return sum(numberArr);
-        }
-
-
-
-    public String[] splitNumber(String numbers, String[] delimiter) {
-        String regex = "";
-        for (String delimit : delimiter) {
-            regex += Pattern.quote(delimit) + "|";
-        }
-        regex = regex.substring(0,regex.length() - 1);
-        return numbers.split(regex);
+        return sum(numberArr);
     }
 
-public String[] addDelimiter(String numbers) {
-        String delimiter =  "[,\n]";
+
+    public String[] splitNumber(String numbers, String delimiter) {
+        return numbers.split(delimiter);
+    }
+
+    public String addDelimiter(String numbers) {
+        String delimiter = "[,\n]";
         if (CustomDelimiterBeingUsed(numbers)) {
             int firstNewIndex = numbers.indexOf("\n");
             String customDelimiters = numbers.substring(2, firstNewIndex);
-            if (customDelimiters.startsWith("[") && customDelimiters.endsWith("]")) {
-                delimiter = customDelimiters.substring(1, customDelimiters.length() - 1);
-            } else {
-                delimiter = customDelimiters;
-            }
+            delimiter = delimiter + "|" + customDelimiters.
+                    replace("[", "(").
+                    replace("]", ")").
+                    replace(")(", ")|(").
+                    replace("*", "\\*");
 
         }
-        return delimiter.split("\\]\\[");
+        return delimiter;
     }
-
 
     public String removeDelimiter(String numbers) {
         if (CustomDelimiterBeingUsed(numbers)) {
@@ -59,27 +53,31 @@ public String[] addDelimiter(String numbers) {
 
 
     public List<Integer> addNegativeNumbers(String[] numberArr) {
+        List<Integer> negativeNumbers = new ArrayList<>();
+        for (String number : numberArr) {
+            int parsedInt = Integer.parseInt(number);
+            if (parsedInt < 0) {
+                negativeNumbers.add(parsedInt);
+            }
 
-        return Arrays.stream(numberArr)
-                .mapToInt(Integer::parseInt)
-                .filter(n -> n < 0)
-                .boxed().collect(Collectors.toList());
 
+        }
+        return negativeNumbers;
     }
-    private void handleNegativeNumbersException(String[] numberArr) {
+    public void handleNegativeNumbersException(String[] numberArr) {
         List<Integer> negativeNumbers = addNegativeNumbers(numberArr);
         if (!negativeNumbers.isEmpty()) {
             throw new IllegalArgumentException("Negatives not allowed: " +negativeNumbers);
         }
     }
 
-    private static boolean CustomDelimiterBeingUsed(String numbers) {
+    public static boolean CustomDelimiterBeingUsed(String numbers) {
         return numbers.startsWith("//");
     }
     public int sum(String[] numberArr) {
         return Arrays.stream(numberArr)
                 .mapToInt(Integer::parseInt)
-                .filter(n -> n < 1000)
+                .filter(n -> n <= 1000)
                 .sum();
 
     }
