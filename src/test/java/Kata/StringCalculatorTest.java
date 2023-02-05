@@ -62,5 +62,10 @@ class StringCalculatorTest {
 
 
     }
+    @Test
+    void TestingMultipleDelimitersWithlongerThanOneCharacter() {
+            assertEquals(6,stringCalculator.add("//[****][%%%%]\n1****2%%%%3"));
+
+    }
 }
 
